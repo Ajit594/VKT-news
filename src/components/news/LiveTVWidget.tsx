@@ -1,11 +1,23 @@
-import { useState } from "react";
-import { X, Maximize2, Minimize2, Volume2, VolumeX, Play, Pause, Tv } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { X, Maximize2, Minimize2, Volume2, VolumeX, Tv } from "lucide-react";
 
 const LiveTVWidget = () => {
   const [isMinimized, setIsMinimized] = useState(true); // Start minimized
   const [isVisible, setIsVisible] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  // YouTube video ID extracted from: https://youtu.be/yYWogCU8MDg
+  const youtubeVideoId = "yYWogCU8MDg";
+
+  // Control mute/unmute via YouTube API
+  useEffect(() => {
+    if (iframeRef.current) {
+      const iframe = iframeRef.current;
+      const message = isMuted ? '{"event":"command","func":"mute","args":""}' : '{"event":"command","func":"unMute","args":""}';
+      iframe.contentWindow?.postMessage(message, '*');
+    }
+  }, [isMuted]);
 
   // Show reopen button when widget is closed
   if (!isVisible) {
@@ -35,31 +47,19 @@ const LiveTVWidget = () => {
         }`}
     >
       <div className="relative bg-black rounded-lg overflow-hidden">
-        {/* Video placeholder */}
-        <div className={`relative ${isMinimized ? "aspect-video" : "aspect-video"}`}>
-          <img
-            src="https://images.unsplash.com/photo-1495020689067-958852a7765e?w=800&q=80"
-            alt="Live TV"
-            className="w-full h-full object-cover"
+        {/* YouTube Video */}
+        <div className="relative aspect-video">
+          <iframe
+            ref={iframeRef}
+            src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${youtubeVideoId}&enablejsapi=1&rel=0&modestbranding=1`}
+            title="VKT News Live"
+            className="w-full h-full"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
           />
 
-          {/* Live overlay */}
-          <div className="absolute inset-0 bg-black/30" />
-
-          {/* Play/Pause overlay */}
-          {!isPlaying && (
-            <button
-              onClick={() => setIsPlaying(true)}
-              className="absolute inset-0 flex items-center justify-center"
-            >
-              <div className="w-16 h-16 rounded-full bg-primary/90 hover:bg-primary flex items-center justify-center transition-colors">
-                <Play className="w-8 h-8 text-primary-foreground fill-current ml-1" />
-              </div>
-            </button>
-          )}
-
           {/* Live badge */}
-          <div className="absolute top-3 left-3">
+          <div className="absolute top-3 left-3 z-10">
             <span className="tag-live">
               <span className="live-dot" />
               LIVE
@@ -67,18 +67,13 @@ const LiveTVWidget = () => {
           </div>
 
           {/* Controls */}
-          <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
+          <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent z-10">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => setIsPlaying(!isPlaying)}
-                  className="p-1.5 rounded-full bg-white/20 hover:bg-white/30 text-white transition-colors"
-                >
-                  {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
-                </button>
-                <button
                   onClick={() => setIsMuted(!isMuted)}
                   className="p-1.5 rounded-full bg-white/20 hover:bg-white/30 text-white transition-colors"
+                  title={isMuted ? "Unmute" : "Mute"}
                 >
                   {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                 </button>
@@ -88,12 +83,14 @@ const LiveTVWidget = () => {
                 <button
                   onClick={() => setIsMinimized(!isMinimized)}
                   className="p-1.5 rounded-full bg-white/20 hover:bg-white/30 text-white transition-colors"
+                  title={isMinimized ? "Maximize" : "Minimize"}
                 >
                   {isMinimized ? <Maximize2 className="w-4 h-4" /> : <Minimize2 className="w-4 h-4" />}
                 </button>
                 <button
                   onClick={() => setIsVisible(false)}
                   className="p-1.5 rounded-full bg-white/20 hover:bg-white/30 text-white transition-colors"
+                  title="Close"
                 >
                   <X className="w-4 h-4" />
                 </button>
