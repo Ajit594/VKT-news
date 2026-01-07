@@ -1,0 +1,273 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    /* VKT News Design System */
+    --background: 0 0% 98%;
+    --foreground: 234 67% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 234 67% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 234 67% 15%;
+
+    /* Breaking News Red */
+    --primary: 0 65% 51%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Trust Blue */
+    --secondary: 234 67% 30%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 234 67% 95%;
+    --accent-foreground: 234 67% 30%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 234 67% 30%;
+
+    --radius: 0.5rem;
+
+    /* Custom VKT Colors */
+    --news-red: 0 65% 51%;
+    --trust-blue: 234 67% 30%;
+    --gold-accent: 43 96% 56%;
+    --cricket-green: 142 71% 45%;
+    --live-pulse: 0 84% 60%;
+
+    /* Typography */
+    --font-heading: 'Merriweather', Georgia, serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(234 67% 30%) 0%, hsl(234 67% 20%) 100%);
+    --gradient-breaking: linear-gradient(90deg, hsl(0 65% 51%) 0%, hsl(0 65% 45%) 100%);
+    --gradient-story: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(43 96% 56%) 0%, hsl(38 92% 50%) 100%);
+
+    /* Shadows */
+    --shadow-card: 0 2px 8px -2px rgba(0, 0, 0, 0.1), 0 4px 16px -4px rgba(0, 0, 0, 0.08);
+    --shadow-elevated: 0 8px 30px rgba(0, 0, 0, 0.12);
+    --shadow-ticker: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 234 67% 8%;
+    --foreground: 0 0% 98%;
+
+    --card: 234 50% 12%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 234 50% 12%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 65% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 234 50% 40%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 234 30% 18%;
+    --muted-foreground: 220 9% 66%;
+
+    --accent: 234 40% 20%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 234 30% 20%;
+    --input: 234 30% 20%;
+    --ring: 234 50% 50%;
+
+    --sidebar-background: 234 50% 10%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 0 0% 98%;
+    --sidebar-primary-foreground: 234 67% 15%;
+    --sidebar-accent: 234 40% 18%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 234 30% 20%;
+    --sidebar-ring: 234 50% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer components {
+  .container-news {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .headline-xl {
+    @apply font-heading font-bold text-2xl sm:text-3xl lg:text-4xl leading-tight tracking-tight;
+  }
+
+  .headline-lg {
+    @apply font-heading font-bold text-xl sm:text-2xl leading-tight;
+  }
+
+  .headline-md {
+    @apply font-heading font-semibold text-lg leading-snug;
+  }
+
+  .headline-sm {
+    @apply font-heading font-semibold text-base leading-snug;
+  }
+
+  .body-text {
+    @apply font-body text-base leading-relaxed;
+  }
+
+  .caption-text {
+    @apply font-body text-sm text-muted-foreground;
+  }
+
+  .tag-exclusive {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold uppercase tracking-wider bg-primary text-primary-foreground;
+  }
+
+  .tag-breaking {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold uppercase tracking-wider bg-primary text-primary-foreground animate-pulse;
+  }
+
+  .tag-live {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-semibold uppercase tracking-wider bg-primary text-primary-foreground;
+  }
+
+  .card-news {
+    @apply bg-card rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg;
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-news:hover {
+    box-shadow: var(--shadow-elevated);
+    transform: translateY(-2px);
+  }
+
+  .ticker-text {
+    @apply whitespace-nowrap animate-marquee;
+  }
+
+  .gradient-story {
+    background: var(--gradient-story);
+  }
+
+  .gradient-breaking {
+    background: var(--gradient-breaking);
+  }
+
+  .live-dot {
+    @apply w-2 h-2 rounded-full bg-primary animate-pulse;
+  }
+}
+
+@layer utilities {
+  .font-heading {
+    font-family: var(--font-heading);
+  }
+
+  .font-body {
+    font-family: var(--font-body);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* Pulse Animation for Live Button */
+@keyframes pulse-live {
+  0%, 100% {
+    box-shadow: 0 0 0 0 hsl(var(--primary) / 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px hsl(var(--primary) / 0);
+  }
+}
+
+.animate-pulse-live {
+  animation: pulse-live 2s ease-in-out infinite;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Stagger children */
+.stagger-children > * {
+  opacity: 0;
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
